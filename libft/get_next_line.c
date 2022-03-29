@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
 char	*ft_principal(char *guardar, int fd)
 {
@@ -21,7 +21,7 @@ char	*ft_principal(char *guardar, int fd)
 	if (!buffer)
 		return (NULL);
 	numbytes = 1;
-	while (numbytes && !ft_strchr(guardar, '\n'))
+	while (numbytes && !ft_get_strchr(guardar, '\n'))
 	{
 		numbytes = read(fd, buffer, BUFFER_SIZE);
 		if (numbytes == -1)
@@ -30,7 +30,7 @@ char	*ft_principal(char *guardar, int fd)
 			return (NULL);
 		}
 		buffer[numbytes] = '\0';
-		guardar = ft_strjoin(guardar, buffer);
+		guardar = ft_get_strjoin(guardar, buffer);
 	}
 	free(buffer);
 	return (guardar);
@@ -79,7 +79,7 @@ char	*ft_static(char *guardar)
 		free(guardar);
 		return (NULL);
 	}
-	len = (ft_strlen(guardar) - i);
+	len = (ft_get_strlen(guardar) - i);
 	str2 = malloc((len + 1) * sizeof(char));
 	if (!str2)
 		return (NULL);

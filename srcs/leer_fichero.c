@@ -12,24 +12,43 @@
 
 #include "fdf.h"
 
-int get_witdh(char *fichero)
+int get_rows(char *fichero)
 {
-	int x;
-	int fd;
-
-	x = 0;
+	int		fd;
+	int		x;
 
 	fd = open(fichero, O_RDONLY, 0);
-	while(get_next_line(fd))
+	x = 0;
+	while (get_next_line(fd))
+	{
 		x++;
+	}
 	close(fd);
 	return (x);
 }
 
+int get_columns (char *fichero)
+{
+	int fd;
+	int y;
+	char *str;
+
+	y = 0;
+	fd = open(fichero, O_RDONLY, 0);
+	str = get_next_line(fd);
+	y = contador_words(str, ' ');
+	close(fd);
+	return (y);
+}
+
+//Faltara rellenar matriz con los numeros sera un **int
+//En el fdf.c recorremos la matriz para ver que se haya rellenado bien
+// Ya se dibujara chicos
+
+
 int leer_fichero(st_fdf *info, char *fichero)
 {
-	info->x = get_witdh(fichero);
-	printf("%d\n", info->x);
-	//info->y = get_rows(fichero);
+	info->x = get_rows(fichero);
+	info->y = get_columns(fichero);
 	return(0);
 }

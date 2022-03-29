@@ -11,54 +11,39 @@
 # **************************************************************************** #
 
 
-NAME = fdf
+NAME 	= 	fdf
 
-SRC =	fdf.c \
-		leer_fichero.c \
+SRC 	=	srcs/fdf.c \
+			srcs/leer_fichero.c \
+			srcs/contador_words.c
 
-OBJ = $(addprefix $(OBJ_DIR),$(SRC:.c=.o))
+CC 		= 	gcc
+CFLAGS 	= 	-Wall -Wextra -Werror
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+OBJ		= 	$(SRC:.c=.o)
 
-MLX		= ./minilibx/
-MLX_LIB	= $(addprefix $(MLX),mlx.a)
-MLX_INC	= -I ./minilibx
-MLX_LNK	= -L ./minilibx -l mlx -framework OpenGL -framework AppKit
+LIBFT 	= libft/libft.a
 
-FT		= ./libft/
-FT_LIB	= $(addprefix $(FT),libft.a)
-FT_INC	= -I ./libft
-FT_LNK	= -L ./libft -l ft
+MLXLINK = -L minilibx
+MINILIBX = -I minilibx
+OPENGL = -lmlx -framework OpenGL -framework AppKit
 
-SRC_DIR	= ./srcs/
-INCLUDE_DIR	= ./includes/
-OBJ_DIR	= ./obj/
 
-all: obj $(FT_LIB) $(MLX_LIB) $(NAME)
-
-obj:
-	mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)%.o:$(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCLUDE_DIR) -o $@ -c $<
-
-$(FT_LIB):
-	make -C $(FT)
-
-$(MLX_LIB):
-	make -C $(MLX)
+all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME)
+		make -C minilibx
+		make -C libft
+		$(CC) $(CFLAG) $(MLXLINK) $(MINILIBX) $(LIBFT) $(OPENGL) $^ -o $(NAME)
 
 clean:
-	rm -rf $(OBJ_DIR)
-	make -C $(FT) clean
-	make -C $(MLX) clean
+		make clean -C minilibx
+		make clean -C libft
+		/bin/rm -rf srcs/*.o
 
-fclean: clean
-	rm -rf $(NAME)
-	make -C $(FT) fclean
+fclean: clean 
+		make fclean -C libft
+		/bin/rm -f $(NAME)
 
 re: fclean all
+.PHONY: all clean fclean re

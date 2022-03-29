@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME	=	libft.a
-SRC		=	ft_isalpha.c \
+SRCS		=	ft_isalpha.c \
 			ft_isdigit.c \
 			ft_isalnum.c \
 			ft_isascii.c \
@@ -44,36 +44,19 @@ SRC		=	ft_isalpha.c \
 			ft_strnstr.c\
 			ft_itoa.c\
 			ft_strtrim.c\
-			ft_split.c
+			ft_split.c\
+			get_next_line.c \
+			get_next_line_utils.c
 
-OBJ = $(SRC:.c=.o)
-
-CC = gcc -I./includes
-
-CFLAGS = -Wall -Wextra -Werror -g
-
-.SILENT:
-
+OBJS		= $(SRCS:%.c=%.o)
+FLAGS		= -Wall -Werror -Wextra
+$(NAME):
+	gcc $(FLAGS) -c $(SRCS) -I ./
+	ar rc $(NAME) $(OBJS)
 all: $(NAME)
-
-$(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
-	@echo ""
-	@echo "libft compiled !"
-
-%.o: %.c
-	@echo -n .
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
-
 clean:
-	@echo "Objects deleted !"
-	@/bin/rm -rf $(OBJ)
-
-fclean: clean 
-	@echo "libft.a deleted !"
-	@/bin/rm -rf $(NAME) a.out
-
+	rm -f $(OBJS)
+fclean: clean
+	rm -f $(NAME)
 re: fclean all
 
-.PHONY: all re fclean clean
