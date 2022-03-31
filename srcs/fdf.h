@@ -26,11 +26,14 @@ typedef struct st_fdf {
 	int x;
 	int y;
 	int **z;
+	void *mlx_in;
+	void *mlx_win;
 	
 }st_fdf;
 
 
 int leer_fichero(st_fdf *info, char *fichero);
 int	contador_words(char const *s, char c);
+int ventana(st_fdf *info);
 
 #endif

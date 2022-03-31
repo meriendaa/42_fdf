@@ -6,7 +6,7 @@
 /*   By: tmerida- <tmerida-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 18:12:32 by tmerida-          #+#    #+#             */
-/*   Updated: 2022/03/28 18:12:33 by tmerida-         ###   ########.fr       */
+/*   Updated: 2022/03/31 14:26:15 by tmerida-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,86 @@
 int get_rows(char *fichero)
 {
 	int		fd;
-	int		x;
+	int		y;
 
 	fd = open(fichero, O_RDONLY, 0);
-	x = 0;
+	y = 0;
 	while (get_next_line(fd))
 	{
-		x++;
+		y++;
 	}
 	close(fd);
-	return (x);
+	return (y);
 }
 
 int get_columns (char *fichero)
 {
 	int fd;
-	int y;
+	int x;
 	char *str;
 
-	y = 0;
+	x = 0;
 	fd = open(fichero, O_RDONLY, 0);
 	str = get_next_line(fd);
-	y = contador_words(str, ' ');
+	x = contador_words(str, ' ');
 	close(fd);
-	return (y);
+	return (x);
 }
 
-//Faltara rellenar matriz con los numeros sera un **int
-//En el fdf.c recorremos la matriz para ver que se haya rellenado bien
-// Ya se dibujara chicos
+int rellenar_z(char *line, int *z)
+{
+	char **str;
+	int i;
+	int num;
 
+	i = 0;
+	num = 0;
+	str = ft_split(line, ' ');
+	while (str[i])
+	{
+		num = ft_atoi(str[i]);
+		z[i] = num;
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (0);
+}
+
+
+int get_z(st_fdf *info, char *fichero)
+{
+	int fd;
+	int i;
+	char *line;
+	i = 0;
+	while (i < info->y)
+	{
+		info->z[i++] = (int *)malloc(sizeof(int)*(info->x + 1));
+		if (!info->z[i])
+			return(0);
+	}
+	fd = open(fichero, O_RDONLY, 0);
+	i = 0;
+	while (1 != 0)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		rellenar_z(line, info->z[i++]);
+		free(line);
+	}
+	close(fd);
+	info->z[i] = NULL;
+	return (0);
+}
 
 int leer_fichero(st_fdf *info, char *fichero)
 {
-	info->x = get_rows(fichero);
-	info->y = get_columns(fichero);
-	return(0);
+	info->y = get_rows(fichero);
+	info->x = get_columns(fichero);
+	info->z = (int **)malloc(sizeof(int *) * (info->y + 1));
+	if (!info->z)
+		return(0);
+	return(get_z(info, fichero));
 }
