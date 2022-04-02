@@ -33,9 +33,11 @@ typedef struct st_fdf {
 	int y0;
 	int y1;
 	int zoom;
-
 	int x;
 	int y;
+	int z0;
+	int z1;
+	int color;
 	
 }st_fdf;
 

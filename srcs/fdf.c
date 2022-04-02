@@ -35,6 +35,8 @@ int main (int argc, char **argv)
 		exit(1);
 	}
 	leer_fichero(info, argv[1]);
+	//printf("%d\n", info->height);
+	//printf("%d\n", info->width);
 	ventana(info);
 	return (0);
 }

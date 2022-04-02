@@ -68,9 +68,9 @@ int get_z(st_fdf *info, char *fichero)
 	int i;
 	char *line;
 	i = 0;
-	while (i < info->y)
+	while (i < info->height)
 	{
-		info->z[i++] = (int *)malloc(sizeof(int)*(info->x + 1));
+		info->z[i++] = (int *)malloc(sizeof(int)*(info->width + 1));
 		if (!info->z[i])
 			return(0);
 	}
@@ -93,7 +93,7 @@ int leer_fichero(st_fdf *info, char *fichero)
 {
 	info->height = get_rows(fichero);
 	info->width = get_columns(fichero);
-	info->z = (int **)malloc(sizeof(int *) * (info->y + 1));
+	info->z = (int **)malloc(sizeof(int *) * (info->height + 1));
 	if (!info->z)
 		return(0);
 	return(get_z(info, fichero));
