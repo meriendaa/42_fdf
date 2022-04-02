@@ -22,22 +22,21 @@ void bresenham(st_fdf *info)
     y = info->y0;  
     dec = 2 * (dy - dx);
 
-    while(x <= info->x1 || y < info->y1)  
+    while(y < info->y1 || x < info->x1)  
     {  
         if(dec >= 0)  
         {  
             mlx_pixel_put(info->mlx_in, info->mlx_win, x, y, info->color);  
-            y++;
+            y = y + 1;
             dec = dec + 2 * (dy - dx); 
         }  
         else
         {  
             mlx_pixel_put(info->mlx_in, info->mlx_win, x, y, info->color);    
-            dec = dec + 2 * dy; 
+            dec = dec + 2 * dy;
+            x = x + 1;
         }  
-        x++;
     }
-
 }
 
 void añadir(st_fdf *info, int num)
