@@ -91,8 +91,8 @@ int get_z(st_fdf *info, char *fichero)
 
 int leer_fichero(st_fdf *info, char *fichero)
 {
-	info->y = get_rows(fichero);
-	info->x = get_columns(fichero);
+	info->height = get_rows(fichero);
+	info->width = get_columns(fichero);
 	info->z = (int **)malloc(sizeof(int *) * (info->y + 1));
 	if (!info->z)
 		return(0);
