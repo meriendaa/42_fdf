@@ -28,17 +28,20 @@ typedef struct st_fdf {
 	int **z;
 	void *mlx_in;
 	void *mlx_win;
-	int x0;
-	int x1;
-	int y0;
-	int y1;
-	int zoom;
+	float x0;
+	float x1;
+	float y0;
+	float y1;
+	float zoom;
 	int x;
 	int y;
-	int z0;
-	int z1;
+	float z0;
+	float z1;
 	int color;
-	
+	float move_x;
+	float move_y;
+	float z_move;
+
 }st_fdf;
 
 

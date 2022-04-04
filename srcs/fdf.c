@@ -29,6 +29,7 @@ int main (int argc, char **argv)
 	st_fdf	*info = NULL;
 	
 	info = (st_fdf *)malloc(sizeof(st_fdf));
+
 	if (argc != 2)
 	{
 		ft_putstr("Error de argumentos");
