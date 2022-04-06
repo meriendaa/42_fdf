@@ -12,10 +12,10 @@
 
 #include "fdf.h"
 
-int get_rows(char *fichero)
+int	get_rows(char *fichero)
 {
-	int		fd;
-	int		y;
+	int	fd;
+	int	y;
 
 	fd = open(fichero, O_RDONLY, 0);
 	y = 0;
@@ -27,11 +27,11 @@ int get_rows(char *fichero)
 	return (y);
 }
 
-int get_columns (char *fichero)
+int	get_columns(char *fichero)
 {
-	int fd;
-	int x;
-	char *str;
+	int		fd;
+	int		x;
+	char	*str;
 
 	x = 0;
 	fd = open(fichero, O_RDONLY, 0);
@@ -41,11 +41,10 @@ int get_columns (char *fichero)
 	return (x);
 }
 
-static void rellenar_z(char *line, int *z)
+static void	rellenar_z(char *line, int *z)
 {
-	char **str;
-	int i;
-
+	char	**str;
+	int		i;
 
 	str = ft_split(line, ' ');
 	i = 0;
@@ -58,18 +57,18 @@ static void rellenar_z(char *line, int *z)
 	free(str);
 }
 
-
-int get_z(st_fdf *info, char *fichero)
+int	get_z(t_data *info, char *fichero)
 {
-	int fd;
-	int i;
-	char *line;
+	int		fd;
+	int		i;
+	char	*line;
+
 	i = 0;
 	while (i < info->height)
 	{
-		info->z[i] = (int *)malloc(sizeof(int)*(info->width + 1));
+		info->z[i] = (int *)malloc(sizeof(int) * (info->width + 1));
 		if (!info->z[i])
-			return(0);
+			return (0);
 		i++;
 	}
 	fd = open(fichero, O_RDONLY, 0);
@@ -87,12 +86,12 @@ int get_z(st_fdf *info, char *fichero)
 	return (0);
 }
 
-int leer_fichero(st_fdf *info, char *fichero)
+int	leer_fichero(t_data *info, char *fichero)
 {
 	info->height = get_rows(fichero);
 	info->width = get_columns(fichero);
 	info->z = (int **)malloc(sizeof(int *) * (info->height + 1));
 	if (!info->z)
-		return(0);
-	return(get_z(info, fichero));
+		return (0);
+	return (get_z(info, fichero));
 }

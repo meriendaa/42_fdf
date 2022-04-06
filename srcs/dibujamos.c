@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-static float steps(float dx, float dy)
+static float	steps(float dx, float dy)
 {
 	if (dx < 0 && dy < 0)
 	{
@@ -32,64 +32,67 @@ static float steps(float dx, float dy)
 			return (dx);
 		return (-dy);
 	}
-	else{
+	else
+	{
 		if (dx < dy)
 			return (dy);
 		return (dx);
 	}
 }
 
-//ALGORITMO DONDE PONDREMOS LOS PIXELES
-static void bresenham(st_fdf *info)
+static void	bresenham(t_data *info)
 {
-    float dx, dy, max;
-    añadir2(info);
-    dx = info->x1 - info->x0;  
-    dy = info->y1 - info->y0;
-    max = steps(dx, dy);
-    dx /= max;
-    dy /= max;
+	float	dx;
+	float	dy;
+	float	max;
 
-    while((int)(info->x1 - info->x0) != 0 || (int)(info->y1 - info->y0) != 0 )  
-    {  
-        mlx_pixel_put(info->mlx_in, info->mlx_win, (int)info->x0, (int)info->y0, info->color); 
-        info->x0 += dx;
-        info->y0 += dy;   
-    }
+	introducir2(info);
+	dx = info->x1 - info->x0;
+	dy = info->y1 - info->y0;
+	max = steps(dx, dy);
+	dx /= max;
+	dy /= max;
+	while ((int)(info->x1 - info->x0) || (int)(info->y1 - info->y0))
+	{
+		mlx_pixel_put(info->mlx_in, info->mlx_win,
+			(int)info->x0, (int)info->y0, info->color);
+		info->x0 += dx;
+		info->y0 += dy;
+	}
 }
 
-int draw(st_fdf *info)
+int	draw(t_data *info)
 {
 	info->y = 0;
 	while (info->y < info->height)
 	{
 		info->x = 0;
-		while(info->x < info->width)
+		while (info->x < info->width)
 		{
 			if (info->x < info->width - 1)
 			{
-				añadir(info, 1);
+				introducir(info, 1);
 				bresenham(info);
 			}
 			if (info->y < info->height - 1)
 			{
-				añadir(info, 2);
+				introducir(info, 2);
 				bresenham(info);
 			}
 			info->x++;
 		}
 		info->y++;
-	} 
+	}
 	return (0);
-} 
+}
 
-int ventana(st_fdf *info)
+int	ventana(t_data *info)
 {
 	info->mlx_win = mlx_new_window(info->mlx_in, 1920, 1080, "FDF");
-	if(!info->mlx_win)
+	if (!info->mlx_win)
 		return (0);
 	draw(info);
-	mlx_key_hook(info->mlx_win, deal_key, info);
+	mlx_key_hook(info->mlx_win, controls, info);
 	mlx_loop(info->mlx_in);
 	return (0);
 }

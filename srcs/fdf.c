@@ -12,9 +12,10 @@
 
 #include "fdf.h"
 
-static void destroy(st_fdf *info)
+static void	destroy(t_data *info)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	mlx_destroy_window(info->mlx_in, info->mlx_win);
 	while (i < info->height)
@@ -26,15 +27,13 @@ static void destroy(st_fdf *info)
 	exit(0);
 }
 
-
-static void restart(st_fdf *info)
+static void	restart(t_data *info)
 {
 	mlx_destroy_window(info->mlx_in, info->mlx_win);
 	ventana(info);
 }
 
-
-int deal_key (int key, st_fdf *info)
+int	controls(int key, t_data *info)
 {
 	if (key == 126)
 		info->z_move++;
@@ -58,28 +57,27 @@ int deal_key (int key, st_fdf *info)
 	return (0);
 }
 
-int init(st_fdf *info)
+int	init(t_data *info)
 {
 	info->mlx_in = mlx_init();
-	if(!info->mlx_in)
+	if (!info->mlx_in)
 		return (0);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_data	*info;
+
+	info = (t_data *)malloc(sizeof(t_data));
+	if (argc != 2)
+		write(1, "Error", 4);
+	leer_fichero (info, argv[1]);
+	init (info);
 	info->zoom = 20;
 	info->move_x = 450;
 	info->move_y = 150;
 	info->z_move = 1;
-	return (0);
-}
-
-int main (int argc, char **argv)
-{
-	if(argc != 2)
-	{
-		write(1, "hola", 4);
-	}
-	st_fdf	*info = NULL;
-	info = (st_fdf *)malloc(sizeof(st_fdf));
-	leer_fichero(info, argv[1]);
-	init(info);
-	ventana(info);
+	ventana (info);
 	return (0);
 }

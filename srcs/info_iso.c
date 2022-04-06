@@ -12,10 +12,10 @@
 
 #include "fdf.h"
 
-static void isommetrica(st_fdf *info)
+static void	isommetrica(t_data *info)
 {
-	int aux_x;
-	int aux_y;
+	int	aux_x;
+	int	aux_y;
 
 	aux_x = info->x0;
 	aux_y = info->y0;
@@ -27,13 +27,20 @@ static void isommetrica(st_fdf *info)
 	info->y1 = (info->x1 + info->y1) * sin(0.8) - (info->z1 * info->z_move);
 }
 
+void	color(t_data *info)
+{
+	if (info->z0 || info->z1)
+		info->color = 0xe80c0c;
+	else
+		info->color = 0xffffff;
+}
 
-void añadir2(st_fdf *info)
+void	introducir2(t_data *info)
 {
 	info->z0 = info->z[(int)info->y0][(int)info->x0];
 	info->z1 = info->z[(int)info->y1][(int)info->x1];
-	info->color = (info->z0 || info->z1) ? 0xe80c0c : 0xffffff;
-    info->x0 *= info->zoom;
+	color(info);
+	info->x0 *= info->zoom;
 	info->y0 *= info->zoom;
 	info->x1 *= info->zoom;
 	info->y1 *= info->zoom;
@@ -44,7 +51,7 @@ void añadir2(st_fdf *info)
 	info->y1 += info->move_y;
 }
 
-void añadir(st_fdf *info, int num)
+void	introducir(t_data *info, int num)
 {
 	if (num == 1)
 	{
