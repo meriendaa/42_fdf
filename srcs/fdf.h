@@ -49,4 +49,8 @@ int leer_fichero(st_fdf *info, char *fichero);
 int	contador_words(char const *s, char c);
 int ventana(st_fdf *info);
 
+void añadir(st_fdf *info, int num);
+void añadir2(st_fdf *info);
+
+
 #endif

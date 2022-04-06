@@ -16,7 +16,8 @@ NAME 	= 	fdf
 SRC 	=	srcs/fdf.c \
 			srcs/leer_fichero.c \
 			srcs/contador_words.c \
-			srcs/dibujamos.c
+			srcs/dibujamos.c \
+			srcs/info_iso.c
 
 CC 		= 	gcc
 CFLAGS 	= 	-Wall -Wextra -Werror
