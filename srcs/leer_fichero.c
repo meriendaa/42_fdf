@@ -41,24 +41,21 @@ int get_columns (char *fichero)
 	return (x);
 }
 
-int rellenar_z(char *line, int *z)
+static void rellenar_z(char *line, int *z)
 {
 	char **str;
 	int i;
-	int num;
 
-	i = 0;
-	num = 0;
+
 	str = ft_split(line, ' ');
+	i = 0;
 	while (str[i])
 	{
-		num = ft_atoi(str[i]);
-		z[i] = num;
+		z[i] = ft_atoi(str[i]);
 		free(str[i]);
 		i++;
 	}
 	free(str);
-	return (0);
 }
 
 
@@ -70,21 +67,22 @@ int get_z(st_fdf *info, char *fichero)
 	i = 0;
 	while (i < info->height)
 	{
-		info->z[i++] = (int *)malloc(sizeof(int)*(info->width + 1));
+		info->z[i] = (int *)malloc(sizeof(int)*(info->width + 1));
 		if (!info->z[i])
 			return(0);
+		i++;
 	}
 	fd = open(fichero, O_RDONLY, 0);
 	i = 0;
-	while (1 != 0)
+	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		rellenar_z(line, info->z[i++]);
+		rellenar_z(line, info->z[i]);
 		free(line);
+		i++;
 	}
-	close(fd);
 	info->z[i] = NULL;
 	return (0);
 }

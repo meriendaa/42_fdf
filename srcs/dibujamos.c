@@ -47,7 +47,6 @@ static void bresenham(st_fdf *info)
     dx = info->x1 - info->x0;  
     dy = info->y1 - info->y0;
     max = steps(dx, dy);
-
     dx /= max;
     dy /= max;
 
@@ -86,15 +85,11 @@ int draw(st_fdf *info)
 
 int ventana(st_fdf *info)
 {
-	info->mlx_in = mlx_init();
-	if(!info->mlx_in)
-		return (0);
-
-	info->mlx_win = mlx_new_window(info->mlx_in, 1920, 1080, "Teodoro");
+	info->mlx_win = mlx_new_window(info->mlx_in, 1920, 1080, "FDF");
 	if(!info->mlx_win)
 		return (0);
-
 	draw(info);
+	mlx_key_hook(info->mlx_win, deal_key, info);
 	mlx_loop(info->mlx_in);
 	return (0);
 }

@@ -51,6 +51,8 @@ int ventana(st_fdf *info);
 
 void añadir(st_fdf *info, int num);
 void añadir2(st_fdf *info);
+int deal_key(int key, st_fdf *info);
+int init(st_fdf *info);
 
 
 #endif
